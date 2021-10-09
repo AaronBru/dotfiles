@@ -118,3 +118,6 @@ fi
 
 #dotfiles management alias
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+#FZF command line auto-completion
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
