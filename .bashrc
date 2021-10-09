@@ -121,3 +121,15 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 #FZF command line auto-completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+#Git auto-completion and formatting
+[ -f ~/.git-completion.bash ] && source ~/.git-completion.bash
+[ -f ~/.git-prompt.sh ] && source ~/.git-prompt.sh
+
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUPSTREAM="auto"
+
+PS1='\n\[\e[1;32m\]\u@\h \[\e[1;0m\]\w\[\e[0m\]\[\e[1;30m\]'`
+   `'$(__git_ps1 "[%s]")\[\e[1;0m\]\n$ '
+
