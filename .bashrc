@@ -133,3 +133,5 @@ GIT_PS1_SHOWUPSTREAM="auto"
 PS1='\n\[\e[1;32m\]\u@\h \[\e[1;0m\]\w\[\e[0m\]\[\e[1;30m\]'`
    `'$(__git_ps1 "[%s]")\[\e[1;0m\]\n$ '
 
+[ -f ~/.bashrc_local ] && source ~/.bashrc_local
+
