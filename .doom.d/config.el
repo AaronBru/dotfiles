@@ -37,6 +37,18 @@
 
 (setq org-babel-python-command "python3")
 
+(setq org-babel-C++-compiler "g++-11 -std=c++20")
+
+(setq shell-command-switch "-ic")
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function "insert-tab")
+(setq-default electric-indent-inhibit t)
+
+(setq org-src-preserve-indentation nil)
+(setq org-edit-src-content-indentation 0)
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
