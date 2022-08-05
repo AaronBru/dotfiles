@@ -123,7 +123,12 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 #Git auto-completion and formatting
-[ -f ~/.git-completion.bash ] && source ~/.git-completion.bash
+if [ -f ~/.git-completion.bash ]; then
+    source ~/.git-completion.bash
+elif [ -f ~/git-completion.sh ]; then
+    source ~/git-completion.sh
+fi
+
 [ -f ~/.git-prompt.sh ] && source ~/.git-prompt.sh
 
 GIT_PS1_SHOWDIRTYSTATE=1

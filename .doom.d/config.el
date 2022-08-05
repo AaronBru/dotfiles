@@ -25,7 +25,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-vibrant)
+
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -39,16 +40,72 @@
 
 (setq org-babel-C++-compiler "g++-11 -std=c++20")
 
-(setq shell-command-switch "-ic")
-
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function "insert-tab")
 (setq-default electric-indent-inhibit t)
+(setq c-tab-always-indent nil)
 
 (setq org-src-preserve-indentation nil)
 (setq org-edit-src-content-indentation 0)
 
+(setq plantuml-jar-path "/opt/java/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+
+(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
+
+;; Let projectile find all files within a project without needing to have visited
+;; them prior
+(setq projectile-indexing-method 'alien)
+(setq projectile-enable-caching nil)
+(setq projectile-require-project-root nil)
+
+(setq projectile-project-root-functions '(projectile-root-local
+                                          projectile-root-top-down
+                                          projectile-root-top-down-recurring
+                                          projectile-root-bottom-up))
+
+(map! :leader
+      ( :prefix "l"
+        :desc "lsp-find-definition" "l" #'lsp-find-definition
+        :desc "lsp-find-references" "r" #'lsp-find-references))
+
+;; Some keybinds brought over from my time with vim+cscope+fzf
+(map! :desc "Jump to definition" :m "C-]" #'+lookup/definition)
+(map! :desc "Find file" :n "C-p" #'helm-find)
+
+;; Fix latex at some point...
+(setq org-latex-pdf-process '("latexmk -f -pdf -interaction=nonstopmode -output-directory=%o %f"))
+
+(defun my/helm/compile ()
+  (interactive)
+  (compile (helm-comp-read "Compile Commands:" compile-commands)))
+
+(defun my/helm/compile/project ()
+  (interactive)
+  (let ((default-directory (projectile-acquire-root)))
+        (my/helm/compile)))
+
+(map! :leader
+      ( :prefix "c"
+        :desc "Find compile command" "F" #'my/helm/compile/project))
+
+(load "~/.doom.d/build_cmds.el")
+
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(defconst my-cc-style
+  '("cc-mode"
+    (c-offsets-alist . ((innamespace . 0)
+                        (access-label . [0])
+                        (substatement-open . 0)))))
+
+(c-add-style "my-cc-style" my-cc-style)
+(add-hook 'c++-mode-hook (lambda () (c-set-style "my-cc-style") ))
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
