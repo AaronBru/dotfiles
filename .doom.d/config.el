@@ -92,6 +92,15 @@
 
 (load "~/.doom.d/build_cmds.el")
 
+(use-package! ace-window
+  :config
+  (map! :leader
+        "k" nil
+        :desc "ace-window" "k" #'ace-window)
+  (setq aw-scope 'global
+        aw-ignore-on nil
+        ))
+
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)

@@ -51,3 +51,4 @@
 
 (package! tree-sitter)
 (package! tree-sitter-langs)
+(package! ace-window)
